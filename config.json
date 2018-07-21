@@ -1,0 +1,5 @@
+{
+	"listenPort": 80,
+	"uploadDir" : "./upload",
+	"baseUrl"   : "http://example.com/upload/{{filename}}"
+}
