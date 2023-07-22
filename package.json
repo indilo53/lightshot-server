@@ -9,8 +9,8 @@
   "author": "Jérémie N'gadi",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.3",
-    "express-fileupload": "^0.4.0",
-    "uid": "0.0.2"
+    "express": "^4.18.2",
+    "express-fileupload": "^1.4.0",
+    "uid": "^2.0.2"
   }
 }
