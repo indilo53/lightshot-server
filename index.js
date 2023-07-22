@@ -1,12 +1,15 @@
 const fs         = require('fs');
+const http       = require("http");
 const express    = require('express');
 const fileUpload = require('express-fileupload');
 const app        = express();
-const uid        = require('uid');
+const { uid }    = require('uid');
 const config     = require('./config.json');
- 
+
 app.use(fileUpload());
- 
+
+app.use('/i', express.static(config.uploadDir))
+
 app.post('/upload/:a/:b/', function(req, res) {
 
   if (!req.files)
@@ -15,8 +18,6 @@ app.post('/upload/:a/:b/', function(req, res) {
   let newFileName;
 
   for(let k in req.files) {
-    if(req.files.hasOwnProperty(k)) {
-
       ((file) => {
 
         if(file.name.indexOf('thumb') == -1) {
@@ -38,20 +39,19 @@ app.post('/upload/:a/:b/', function(req, res) {
         }
 
       })(req.files[k]);
-
-    }
   }
 
-  const url = config.baseUrl.replace('{{filename}}', newFileName);
-
-  res.send(
-`<response>
-  <status>success</status>
-  <url>${url}</url>
-  <thumb>${url}</thumb>
-</response>
-`);
-
+  const url  = config.baseUrl.replace('{{filename}}', newFileName);
+  const body = `<response><status>success</status><share>${url}</share></response>
+`
+  res.send(body);
 });
 
-app.listen(config.listenPort);
+app.g
+
+http
+  .createServer(app)
+  .listen(config.listenPort, () => {
+    console.log('lightshot http server started on port ' + config.listenPort);
+  })
+;
